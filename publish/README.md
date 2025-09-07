@@ -5,9 +5,9 @@
 ## 📦 패키지 개요
 
 - **@ory/elements-react** → **@easyyo/ory.elements-react**: React 인증 UI 컴포넌트 라이브러리
-  - 현재 버전: 1.0.0-165f59bd.mod3
+  - 현재 버전: 1.0.0-165f59bd.mod4
 - **@ory/nextjs** → **@easyyo/ory.nextjs**: Next.js 통합 패키지 (App Router/Pages Router + 미들웨어 지원)
-  - 현재 버전: 1.0.0-rc.0-165f59bd.mod1
+  - 현재 버전: 1.0.0-rc.0-165f59bd.mod2
 
 ## 📁 폴더 구조
 

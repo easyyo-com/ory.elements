@@ -1,6 +1,6 @@
 {
   "name": "@easyyo/ory.elements-react",
-  "version": "1.0.0-165f59bd.mod3",
+  "version": "1.0.0-165f59bd.mod4",
   "description": "Ory Elements React - a collection of React components for authentication UIs.",
   "license": "Apache License 2.0",
   "author": "easyyo",
@@ -66,11 +66,7 @@
     "auth",
     "react",
     "passwordless",
-    "authentication",
-    "ui-components",
-    "login",
-    "registration",
-    "self-service"
+    "authentication"
   ],
   "repository": {
     "type": "git",
