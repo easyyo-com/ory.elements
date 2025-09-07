@@ -10,7 +10,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **주요 패키지**:
   - `@ory/elements-react`: 핵심 React 컴포넌트 및 테마 시스템
   - `@ory/nextjs`: Next.js 통합 패키지 (App Router/Pages Router + 미들웨어)
+- **발행 패키지** (@easyyo 조직):
+  - `@easyyo/ory.elements-react`: 핵심 React 컴포넌트 라이브러리
+  - `@easyyo/ory.nextjs`: Next.js 통합 패키지
 - **예제 앱**: `examples/nextjs-app-router`, `examples/nextjs-pages-router`
+- **발행 워크플로우**: `publish/` 디렉토리에서 NPM 패키지 발행 관리
 
 ## 개발 명령어
 
@@ -45,6 +49,34 @@ nx run-many --target=lint --all
 ```bash
 make build-sdk       # Kratos SDK 재생성 (KRATOS_DIR 환경변수 필요)
 make licenses        # 오픈소스 라이센스 확인
+```
+
+### NPM 패키지 발행 명령어 (publish/ 디렉토리)
+```bash
+# publish/ 디렉토리에서 실행
+cd publish/
+
+# 도움말 및 기본 설정
+make help            # 발행 관련 명령어 도움말 보기
+make install         # 의존성 설치
+
+# 개별 패키지 빌드
+make build-elements-react    # elements-react 패키지만 빌드
+make build-nextjs           # nextjs 패키지만 빌드
+make build-all              # 모든 패키지 빌드
+
+# package.json 동기화
+make sync-package-elements-react  # elements-react package.json 동기화
+make sync-package-nextjs         # nextjs package.json 동기화
+make sync-all-packages           # 모든 package.json 동기화
+
+# NPM 발행 (빌드 자동 포함)
+make publish-elements-react  # @easyyo/ory.elements-react 발행
+make publish-nextjs         # @easyyo/ory.nextjs 발행
+make publish-all            # 모든 패키지 발행
+
+# 유틸리티
+make clean              # 빌드 결과물 정리
 ```
 
 ## 기술 스택
@@ -84,6 +116,27 @@ src/
 └── utils/           # Next.js 관련 유틸리티
 ```
 
+### publish/ (NPM 패키지 발행)
+```
+publish/
+├── README.md                    # 발행 가이드 문서
+├── Makefile                     # 빌드 및 발행 자동화
+├── utils/
+│   ├── log.sh                  # 색상 로그 유틸리티
+│   ├── sync-package-json.js    # package.json 동기화 스크립트
+│   └── sync-package.sh         # 동기화 실행 쉘 스크립트
+├── elements-react/
+│   ├── package.json            # @easyyo/ory.elements-react 패키지 설정
+│   ├── dist/                   # 빌드 결과물 (빌드 후 생성)
+│   ├── README.md               # 패키지 README (빌드 시 복사)
+│   └── LICENSE                 # 라이센스 파일 (빌드 시 복사)
+└── nextjs/
+    ├── package.json            # @easyyo/ory.nextjs 패키지 설정
+    ├── dist/                   # 빌드 결과물 (빌드 후 생성)
+    ├── README.md               # 패키지 README (빌드 시 복사)
+    └── LICENSE                 # 라이센스 파일 (빌드 시 복사)
+```
+
 ## 주요 개발 포인트
 
 ### @ory/elements-react 패키지
@@ -115,6 +168,38 @@ src/
 - **테마 커스터마이징**: CSS 변수 오버라이드 (예: `--brand-500`, `--ui-100`)
 - **Tailwind 통합**: `@ory/elements-react/theme/tailwind` 설정 활용
 
+## NPM 패키지 발행
+
+### @easyyo 조직으로 발행되는 패키지
+
+이 프로젝트는 원본 Ory Elements 패키지를 @easyyo 조직으로 재발행하는 워크플로우를 제공합니다:
+
+- **@easyyo/ory.elements-react**: 핵심 React 인증 UI 컴포넌트 라이브러리
+- **@easyyo/ory.nextjs**: Next.js App Router/Pages Router 통합 패키지
+
+### 발행 워크플로우
+
+1. **의존성 설치**: `make install` (프로젝트 루트에서 npm install)
+2. **package.json 동기화**: 원본 패키지 정보를 발행용 패키지에 동기화
+3. **원본 패키지 빌드**: `nx build @ory/elements-react` 또는 `nx build @ory/nextjs`
+4. **빌드 파일 복사**: dist 폴더를 publish 디렉토리로 복사
+5. **메타데이터 복사**: LICENSE, README.md 파일 복사
+6. **NPM 발행**: `npm publish --tag latest` 실행
+
+### 버전 관리 규칙
+
+패키지 버전은 다음 형식을 따릅니다:
+```
+[원본 라이브러리 버전]-[커밋 SHA 7자리].mod[번호]
+```
+예시: `1.0.0-165f59bd.mod4`
+
+### 발행 전 준비사항
+
+- npm 로그인 상태 확인: `npm whoami`
+- 버전 정보 업데이트 (필요시)
+- 빌드 및 테스트 성공 확인
+
 ## 주요 파일 위치
 
 - **핵심 컴포넌트**: `packages/elements-react/src/components/`
@@ -122,3 +207,5 @@ src/
 - **다국어 파일**: `packages/elements-react/src/locales/`
 - **Next.js 미들웨어**: `packages/nextjs/src/middleware/`
 - **설정 파일**: `nx.json`, `eslint.config.mjs`, `tsconfig.json`
+- **발행 설정**: `publish/` 디렉토리 전체
+- **발행 가이드**: `publish/README.md`
