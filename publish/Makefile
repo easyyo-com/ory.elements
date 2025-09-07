@@ -7,6 +7,7 @@ ROOT_DIR := $(shell cd .. && pwd)
 .PHONY: help install clean
 .PHONY: build-elements-react build-nextjs build-all
 .PHONY: publish-elements-react publish-nextjs publish-all
+.PHONY: sync-package-elements-react sync-package-nextjs sync-all-packages
 
 # 기본 타겟
 help:
@@ -20,6 +21,11 @@ help:
 	@echo "  make build-elements-react     - elements-react 패키지 빌드"
 	@echo "  make build-nextjs             - nextjs 패키지 빌드"
 	@echo "  make build-all                - 모든 패키지 빌드"
+	@echo ""
+	@echo -e "\033[1;33m동기화:\033[0m"
+	@echo "  make sync-package-elements-react  - elements-react package.json 동기화"
+	@echo "  make sync-package-nextjs          - nextjs package.json 동기화"  
+	@echo "  make sync-all-packages            - 모든 package.json 동기화"
 	@echo ""
 	@echo -e "\033[1;33m퍼블리시:\033[0m"
 	@echo "  make publish-elements-react   - elements-react 패키지 퍼블리시 (빌드 포함)"
@@ -42,7 +48,7 @@ clean:
 	@./utils/log.sh log_success "정리 완료"
 
 # elements-react 빌드
-build-elements-react: install
+build-elements-react: install sync-package-elements-react
 	@./utils/log.sh log_build "elements-react 패키지 빌드 시작..."
 	@cd $(ROOT_DIR) && npx nx build @ory/elements-react
 	@./utils/log.sh log_info "elements-react 빌드 파일 복사 중..."
@@ -70,7 +76,7 @@ build-elements-react: install
 	@./utils/log.sh log_success "elements-react 패키지 빌드 완료"
 
 # nextjs 빌드  
-build-nextjs: install
+build-nextjs: install sync-package-nextjs
 	@./utils/log.sh log_build "nextjs 패키지 빌드 시작..."
 	@cd $(ROOT_DIR) && npx nx build @ory/nextjs
 	@./utils/log.sh log_info "nextjs 빌드 파일 복사 중..."
@@ -149,3 +155,20 @@ publish-all: build-all
 	@./utils/log.sh log_info "발행된 패키지들:"
 	@./utils/log.sh log_info "  - @easyyo/ory.elements-react"
 	@./utils/log.sh log_info "  - @easyyo/ory.nextjs"
+
+# package.json 동기화 타겟들
+sync-package-elements-react:
+	@./utils/log.sh log_info "elements-react package.json 동기화 중..."
+	@./utils/sync-package.sh elements-react
+
+sync-package-nextjs:
+	@./utils/log.sh log_info "nextjs package.json 동기화 중..."
+	@./utils/sync-package.sh nextjs
+
+sync-all-packages:
+	@./utils/log.sh log_info "모든 package.json 동기화 시작"
+	@./utils/log.sh log_info "========================================"
+	@$(MAKE) sync-package-elements-react
+	@$(MAKE) sync-package-nextjs
+	@./utils/log.sh log_info "========================================"
+	@./utils/log.sh log_success "모든 package.json 동기화가 완료되었습니다!"

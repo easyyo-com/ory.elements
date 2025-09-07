@@ -16,7 +16,9 @@ publish/
 ├── README.md                                    # 이 파일 - 전체 가이드
 ├── Makefile                                     # 빌드 및 퍼블리시 통합 관리
 ├── utils/
-│   └── log.sh                                  # Makefile에서 사용하는 색상 로그 유틸리티
+│   ├── log.sh                                  # Makefile에서 사용하는 색상 로그 유틸리티
+│   ├── sync-package-json.js                    # package.json 동기화 Node.js 스크립트
+│   └── sync-package.sh                         # package.json 동기화 실행 쉘 스크립트
 ├── elements-react/
 │   ├── .gitignore                              # Git 무시 파일 (dist, LICENSE, README.md 제외)
 │   ├── package.json                            # @easyyo/ory.elements-react 패키지 설정
@@ -69,6 +71,16 @@ make build-nextjs
 make build-all
 ```
 
+**package.json 동기화:**
+```bash
+# 개별 패키지 동기화
+make sync-package-elements-react
+make sync-package-nextjs
+
+# 모든 패키지 동기화
+make sync-all-packages
+```
+
 **퍼블리시 (빌드 자동 포함):**
 ```bash
 # 개별 패키지 퍼블리시
@@ -102,10 +114,11 @@ make publish-elements-react
 Makefile이 자동으로 처리하는 작업 과정:
 
 1. **의존성 설치**: `make install` - 프로젝트 루트에서 `npm install` 실행
-2. **원본 패키지 빌드**: `nx build @ory/elements-react` 또는 `nx build @ory/nextjs` 실행
-3. **빌드 파일 복사**: `packages/{package}/dist/` 폴더의 빌드 결과물을 `publish/{package}/dist/`로 복사
-4. **메타데이터 파일 복사**: LICENSE, README.md 파일을 패키지 폴더에 복사
-5. **npm 발행**: 각 패키지 폴더에서 `npm publish --tag latest` 실행
+2. **package.json 동기화**: 원본 패키지의 package.json을 발행용 패키지에 동기화
+3. **원본 패키지 빌드**: `nx build @ory/elements-react` 또는 `nx build @ory/nextjs` 실행
+4. **빌드 파일 복사**: `packages/{package}/dist/` 폴더의 빌드 결과물을 `publish/{package}/dist/`로 복사
+5. **메타데이터 파일 복사**: LICENSE, README.md 파일을 패키지 폴더에 복사
+6. **npm 발행**: 각 패키지 폴더에서 `npm publish --tag latest` 실행
 
 ## 🔧 커스터마이징
 
@@ -135,6 +148,25 @@ Makefile이 자동으로 처리하는 작업 과정:
 - 로그 메시지 변경
 - 퍼블리시 태그 변경 (`--tag latest` 부분)
 - 메타데이터 파일 추가/변경
+- package.json 동기화 필드 변경
+
+### package.json 동기화 커스터마이징
+`utils/sync-package-json.js`에서 동기화 로직을 커스터마이징할 수 있습니다:
+
+**동기화 제외 필드**:
+현재 다음 필드들은 원본에서 복사되지 않고 발행용 패키지의 값을 유지합니다:
+- `name`: 패키지 이름 (예: @easyyo/ory.elements-react)
+- `version`: 패키지 버전
+- `author`: 패키지 작성자
+- `repository`: Git 저장소 URL
+- `bugs`: 이슈 트래커 URL
+- `homepage`: 홈페이지 URL
+- `devDependencies`: 개발 의존성
+- `scripts`: NPM 스크립트
+- `publishConfig`: 발행 설정
+
+**동기화되는 필드**:
+위 필드를 제외한 모든 필드 (dependencies, peerDependencies, description, keywords 등)가 원본 패키지에서 발행용 패키지로 동기화됩니다.
 
 ## 📋 체크리스트
 

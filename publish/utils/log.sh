@@ -35,11 +35,14 @@ log_publish() {
 }
 
 # 첫 번째 인자는 함수명, 두 번째 인자는 메시지
-if [ "$#" -ge 2 ]; then
-    "$1" "$2"
-elif [ "$#" -eq 1 ]; then
-    "$1"
-else
-    echo "Usage: $0 <function_name> [message]"
-    exit 1
+# source로 호출된 경우가 아닐 때만 CLI 로직 실행
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    if [ "$#" -ge 2 ]; then
+        "$1" "$2"
+    elif [ "$#" -eq 1 ]; then
+        "$1"
+    else
+        echo "Usage: $0 <function_name> [message]"
+        exit 1
+    fi
 fi

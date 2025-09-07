@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm pkg fix:*)"
+      "Bash(npm pkg fix:*)",
+      "Bash(make sync-package-elements-react:*)",
+      "Bash(./utils/sync-package.sh:*)",
+      "Bash(make:*)",
+      "Bash(./publish/utils/sync-package.sh:*)"
     ],
     "deny": [],
     "ask": []
