@@ -1,0 +1,87 @@
+{
+  "name": "@easyyo/ory.nextjs",
+  "version": "1.0.0-rc.0-165f59bd.mod1",
+  "description": "Ory Elements for Next.js - authentication integration for Next.js applications.",
+  "license": "Apache License 2.0",
+  "author": "easyyo",
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "private": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./middleware": {
+      "types": "./dist/middleware/index.d.ts",
+      "import": "./dist/middleware/index.mjs",
+      "require": "./dist/middleware/index.js"
+    },
+    "./app": {
+      "types": "./dist/app/index.d.ts",
+      "import": "./dist/app/index.mjs",
+      "require": "./dist/app/index.js"
+    },
+    "./pages": {
+      "types": "./dist/pages/index.d.ts",
+      "import": "./dist/pages/index.mjs",
+      "require": "./dist/pages/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "index": [
+        "./dist/index.d.ts"
+      ],
+      "middleware": [
+        "./dist/middleware/index.d.ts"
+      ]
+    }
+  },
+  "dependencies": {
+    "@ory/client-fetch": "1.21.5",
+    "cookie": "^1.0.1",
+    "psl": "^1.15.0",
+    "set-cookie-parser": "^2.7.1"
+  },
+  "peerDependencies": {
+    "next": ">=13.1.0",
+    "react": ">=16.0.0"
+  },
+  "keywords": [
+    "ory",
+    "auth",
+    "react",
+    "passwordless",
+    "login",
+    "user-management",
+    "permissions",
+    "authentication",
+    "nextjs",
+    "vercel",
+    "app-router",
+    "pages-router",
+    "middleware"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/easyyo-com/ory.elements.git",
+    "directory": "packages/nextjs"
+  },
+  "bugs": {
+    "url": "https://github.com/easyyo-com/ory.elements/issues"
+  },
+  "homepage": "https://github.com/easyyo-com/ory.elements#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ]
+}

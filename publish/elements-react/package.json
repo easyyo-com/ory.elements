@@ -1,0 +1,93 @@
+{
+  "name": "@easyyo/ory.elements-react",
+  "version": "1.0.0-165f59bd.mod3",
+  "description": "Ory Elements React - a collection of React components for authentication UIs.",
+  "license": "Apache License 2.0",
+  "author": "easyyo",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./client": {
+      "types": "./dist/client/index.d.ts",
+      "import": "./dist/client/index.mjs",
+      "require": "./dist/client/index.js"
+    },
+    "./theme": {
+      "types": "./dist/theme/default/index.d.ts",
+      "import": "./dist/theme/default/index.mjs",
+      "require": "./dist/theme/default/index.js"
+    },
+    "./theme/styles.css": "./dist/theme/default/index.css",
+    "./theme/tailwind": {
+      "types": "./dist/theme/default/tailwind/defaults.d.ts",
+      "import": "./dist/theme/default/tailwind/defaults.mjs",
+      "require": "./dist/theme/default/tailwind/defaults.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "index": [
+        "./dist/index.d.ts"
+      ],
+      "client": [
+        "./dist/client/index.d.ts"
+      ],
+      "theme": [
+        "./dist/theme/default/index.d.ts"
+      ]
+    }
+  },
+  "dependencies": {
+    "@marsidev/react-turnstile": "^1.1.0",
+    "@ory/client-fetch": "1.21.5",
+    "@radix-ui/react-dropdown-menu": "2.1.14",
+    "@radix-ui/react-switch": "1.2.4",
+    "class-variance-authority": "0.7.1",
+    "clsx": "2.1.1",
+    "input-otp": "1.4.2",
+    "react-hook-form": "7.56.4",
+    "react-intl": "7.1.10",
+    "sonner": "^2.0.0",
+    "tailwind-merge": "3.3.0",
+    "usehooks-ts": "3.1.1"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0 || ^19.0.0-0",
+    "react-dom": "^18.0.0 || ^19.0.0 || ^19.0.0-0"
+  },
+  "keywords": [
+    "ory",
+    "auth",
+    "react",
+    "passwordless",
+    "authentication",
+    "ui-components",
+    "login",
+    "registration",
+    "self-service"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/easyyo-com/ory.elements.git",
+    "directory": "packages/elements-react"
+  },
+  "bugs": {
+    "url": "https://github.com/easyyo-com/ory.elements/issues"
+  },
+  "homepage": "https://github.com/easyyo-com/ory.elements#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ]
+}
